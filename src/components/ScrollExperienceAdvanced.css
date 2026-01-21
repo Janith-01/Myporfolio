@@ -1,0 +1,1091 @@
+/* ======================================
+   Advanced Scroll Experience - Premium Polish
+   ====================================== */
+
+.scroll-experience-advanced {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+/* Cinematic vignette overlay */
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* ======================================
+   Holographic UI Overlays
+   ====================================== */
+
+/* Scanline animation keyframes */
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: 0.8;
+    }
+
+    94% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.9;
+    }
+
+    98% {
+        opacity: 1;
+    }
+}
+
+@keyframes glitch {
+
+    0%,
+    100% {
+        transform: translate(0);
+        filter: none;
+    }
+
+    20% {
+        transform: translate(-2px, 1px);
+    }
+
+    40% {
+        transform: translate(2px, -1px);
+        filter: hue-rotate(10deg);
+    }
+
+    60% {
+        transform: translate(-1px, 2px);
+    }
+
+    80% {
+        transform: translate(1px, -2px);
+        filter: hue-rotate(-10deg);
+    }
+}
+
+@keyframes holoGlow {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 5px rgba(255, 107, 53, 0.5),
+            0 0 10px rgba(255, 107, 53, 0.3),
+            0 0 20px rgba(255, 107, 53, 0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 8px rgba(255, 107, 53, 0.7),
+            0 0 15px rgba(255, 107, 53, 0.5),
+            0 0 30px rgba(255, 107, 53, 0.3);
+    }
+}
+
+/* Text overlay positioning with holographic effects */
+.text-overlay {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42%;
+    max-width: 520px;
+    z-index: 100;
+    padding: 2rem;
+    animation: flicker 8s infinite;
+}
+
+/* Scanline effect overlay */
+.text-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(255, 107, 53, 0.03) 50%,
+            transparent 100%);
+    height: 30%;
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Scanline texture overlay */
+.text-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.1) 2px,
+            rgba(0, 0, 0, 0.1) 4px);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.3;
+}
+
+.text-overlay.left {
+    left: 4%;
+}
+
+.text-overlay.right {
+    right: 4%;
+}
+
+.text-content {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* Holographic panel background */
+.hero-section,
+.project-section {
+    background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(20, 20, 30, 0.4) 50%,
+            rgba(0, 0, 0, 0.6) 100%);
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+    box-shadow:
+        0 0 20px rgba(255, 107, 53, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Corner decorations for spaceship feel */
+.hero-section::before,
+.project-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    border-top: 2px solid rgba(255, 107, 53, 0.5);
+    border-left: 2px solid rgba(255, 107, 53, 0.5);
+    pointer-events: none;
+}
+
+.hero-section::after,
+.project-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    border-bottom: 2px solid rgba(255, 107, 53, 0.5);
+    border-right: 2px solid rgba(255, 107, 53, 0.5);
+    pointer-events: none;
+}
+
+/* Glitch effect on hover */
+.text-overlay:hover .text-content {
+    animation: glitch 0.3s ease-in-out;
+}
+
+/* Holographic text glow */
+.hero-section h1,
+.project-section h2 {
+    animation: holoGlow 3s ease-in-out infinite;
+}
+
+/* ======================================
+   Hero Section (Sun)
+   ====================================== */
+
+.hero-section {
+    text-align: left;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.3rem;
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(255, 87, 34, 0.1) 100%);
+    border: 1px solid rgba(255, 152, 0, 0.4);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffa500;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero-section h1 {
+    margin: 0 0 1.5rem;
+    line-height: 1.1;
+}
+
+.greeting {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.hero-section .name {
+    display: block;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #ffd700 40%, #ff6b35 80%, #ff4500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.roles {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.role {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.role.ai {
+    color: #ff6b35;
+    background: rgba(255, 107, 53, 0.12);
+    border: 1px solid rgba(255, 107, 53, 0.35);
+}
+
+.role.fullstack {
+    color: #00d4aa;
+    background: rgba(0, 212, 170, 0.12);
+    border: 1px solid rgba(0, 212, 170, 0.35);
+}
+
+.roles .divider {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 1.5rem;
+}
+
+.tagline {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.8;
+    margin: 0 0 1.5rem;
+}
+
+/* ======================================
+   Social Links
+   ====================================== */
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(10px);
+}
+
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.social-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.social-link.github:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+.social-link.linkedin:hover {
+    background: rgba(10, 102, 194, 0.2);
+    border-color: rgba(10, 102, 194, 0.6);
+    color: #0a66c2;
+}
+
+.social-link.facebook:hover {
+    background: rgba(24, 119, 242, 0.2);
+    border-color: rgba(24, 119, 242, 0.6);
+    color: #1877f2;
+}
+
+.social-link.twitter:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+}
+
+.scroll-cta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.95rem;
+}
+
+.scroll-cta .arrow {
+    font-size: 1.6rem;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+/* ======================================
+   Project Section
+   ====================================== */
+
+.project-section {
+    text-align: left;
+}
+
+.planet-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 1px solid;
+    margin-bottom: 1.25rem;
+    backdrop-filter: blur(10px);
+}
+
+.planet-badge .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.project-section h2 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.description {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.75;
+    margin: 0 0 1.5rem;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 25px;
+    color: rgba(255, 255, 255, 0.85);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.tech:hover {
+    background: rgba(255, 107, 53, 0.15);
+    border-color: rgba(255, 107, 53, 0.4);
+    color: #ff6b35;
+    transform: translateY(-2px);
+}
+
+.features {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.features h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0 0 0.9rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.moon-icon {
+    font-size: 1rem;
+}
+
+.links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn.github {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn.github:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.btn.live {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 5px 25px rgba(255, 107, 53, 0.45);
+}
+
+.btn.live:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(255, 107, 53, 0.65);
+}
+
+/* ======================================
+   Progress Indicator
+   ====================================== */
+
+.progress-indicator {
+    position: fixed;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.progress-indicator .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.progress-indicator .dot:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.progress-indicator .dot.active {
+    background: #ff6b35;
+    border-color: rgba(255, 107, 53, 0.6);
+    box-shadow: 0 0 25px rgba(255, 107, 53, 0.7);
+    transform: scale(1.15);
+}
+
+.progress-indicator .tooltip {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: white;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.progress-indicator .dot:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ======================================
+   Audio Toggle Button
+   ====================================== */
+
+.audio-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.audio-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 107, 53, 0.5);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.audio-toggle svg {
+    width: 22px;
+    height: 22px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease;
+}
+
+.audio-toggle:hover svg {
+    color: #ff6b35;
+}
+
+/* ======================================
+   Responsive
+   ====================================== */
+
+@media (max-width: 1200px) {
+    .text-overlay {
+        width: 50%;
+    }
+}
+
+@media (max-width: 900px) {
+    .text-overlay {
+        width: 65%;
+        max-width: none;
+    }
+
+    .text-overlay.left,
+    .text-overlay.right {
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, -50%);
+    }
+
+    .hero-section,
+    .project-section {
+        text-align: center;
+    }
+
+    .roles {
+        justify-content: center;
+    }
+
+    .tech-stack {
+        justify-content: center;
+    }
+
+    .links {
+        justify-content: center;
+    }
+
+    .scroll-cta {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .text-overlay {
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .hero-section .name {
+        font-size: 2.8rem;
+    }
+
+    .project-section h2 {
+        font-size: 2rem;
+    }
+
+    .links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 260px;
+        justify-content: center;
+    }
+
+    .progress-indicator {
+        right: 1rem;
+        gap: 0.9rem;
+    }
+
+    .progress-indicator .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .progress-indicator .tooltip {
+        display: none;
+    }
+}
+
+/* ======================================
+   Contact Form Modal
+   ====================================== */
+
+.contact-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.contact-form {
+    background: linear-gradient(135deg,
+            rgba(10, 10, 20, 0.95) 0%,
+            rgba(20, 20, 40, 0.9) 100%);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow:
+        0 0 50px rgba(255, 107, 53, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.contact-form .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.contact-form .close-btn:hover {
+    color: #ff6b35;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header .transmission-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.form-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 0.5rem;
+}
+
+.form-header p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ff6b35;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff6b35;
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1.2rem;
+    background: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+}
+
+.submit-btn.transmitting {
+    background: rgba(255, 107, 53, 0.3);
+    cursor: not-allowed;
+}
+
+.submit-btn .loading-dots::after {
+    content: '';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+
+    0%,
+    20% {
+        content: '';
+    }
+
+    40% {
+        content: '.';
+    }
+
+    60% {
+        content: '..';
+    }
+
+    80%,
+    100% {
+        content: '...';
+    }
+}
+
+.submit-btn .signal-waves {
+    animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.success-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+.success-message .success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+    border-radius: 50%;
+    font-size: 2.5rem;
+    color: white;
+    margin: 0 auto 1.5rem;
+}
+
+.success-message h3 {
+    color: #00d4aa;
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+}
+
+.success-message p {
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+/* Contact Toggle Button */
+.contact-toggle {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
+}
+
+.contact-toggle:hover {
+    background: rgba(255, 107, 53, 0.2);
+    border-color: rgba(255, 107, 53, 0.5);
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+/* ======================================
+   Easter Egg - Solar Flare
+   ====================================== */
+
+.sun-click-zone {
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    width: 20%;
+    height: 30%;
+    cursor: pointer;
+    z-index: 50;
+}
+
+.solar-flare {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vmax;
+    height: 100vmax;
+    background: radial-gradient(circle,
+            rgba(255, 200, 100, 0.8) 0%,
+            rgba(255, 107, 53, 0.5) 30%,
+            rgba(255, 50, 0, 0.3) 60%,
+            transparent 100%);
+    pointer-events: none;
+    z-index: 500;
+}
+
+/* ======================================
+   Mobile Controls
+   ====================================== */
+
+.scroll-experience-advanced.mobile {
+    touch-action: pan-y;
+}
+
+.mobile-hint {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    z-index: 100;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.mobile-hint .swipe-icon {
+    font-size: 1.5rem;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .contact-toggle {
+        bottom: 1.5rem;
+        left: 1.5rem;
+        width: 42px;
+        height: 42px;
+    }
+
+    .contact-form {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+}
