@@ -642,40 +642,373 @@
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1.5rem;
-  max-width: 900px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .skill-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 2.5rem 1.5rem;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 60px;
-  transition: all 0.3s ease;
-  cursor: default;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(15, 15, 30, 0.95) 0%, rgba(5, 5, 15, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+/* Gradient border glow on hover */
+.skill-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, var(--skill-color, #00d4ff), transparent 50%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+/* Inner highlight */
+.skill-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
 }
 
 .skill-card:hover {
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 30px var(--glow-blue-soft);
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.02);
+  border-color: transparent;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(0, 212, 255, 0.15);
+}
+
+/* Circular Progress Ring */
+.skill-water-fill {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.skill-card:hover .skill-water-fill {
+  opacity: 1;
+}
+
+/* Progress ring background */
+.skill-water-fill::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+      var(--skill-color, #00d4ff) calc(var(--fill-level, 50%) * 3.6deg),
+      rgba(255, 255, 255, 0.05) calc(var(--fill-level, 50%) * 3.6deg));
+  opacity: 0.3;
+  animation: ringPulse 2s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+/* Skill Content */
+.skill-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .skill-icon {
-  font-size: 3rem;
+  font-size: 3.5rem;
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  filter: drop-shadow(0 0 0 transparent);
+}
+
+.skill-card:hover .skill-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 20px var(--skill-color, rgba(0, 212, 255, 0.6)));
 }
 
 .skill-name {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+/* Skill Level - Elegant Progress Bar */
+.skill-level {
+  position: relative;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--text-gray);
+  color: var(--skill-color, var(--primary-blue));
+  padding: 0.35rem 0.75rem;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 50px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s ease 0.1s;
+}
+
+/* Progress bar fill inside level badge */
+.skill-level::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg,
+      rgba(0, 212, 255, 0.2),
+      var(--skill-color, rgba(0, 212, 255, 0.3)));
+  border-radius: 12px;
+  z-index: -1;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.skill-card:hover .skill-level {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skill-card:hover .skill-level::before {
+  width: var(--fill-level, 50%);
+}
+
+/* ======================================
+   Skill Icon Hover Animations
+   ====================================== */
+
+/* Java - Coffee steam animation */
+.skill-card:hover .skill-icon--coffee-steam {
+  animation: coffeeSteam 1s ease-in-out infinite;
+}
+
+@keyframes coffeeSteam {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    filter: blur(0);
+  }
+
+  25% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-2px) rotate(0deg);
+    filter: drop-shadow(0 -5px 5px rgba(255, 165, 0, 0.5));
+  }
+
+  75% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+}
+
+/* React - Spin animation */
+.skill-card:hover .skill-icon--spin {
+  animation: spinAnimation 1s ease-in-out infinite;
+}
+
+@keyframes spinAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Python - Snake wave (wiggle like saying hello) */
+.skill-card:hover .skill-icon--snake-wave {
+  animation: snakeWave 0.6s ease-in-out infinite;
+}
+
+@keyframes snakeWave {
+
+  0%,
+  100% {
+    transform: rotate(0deg) translateX(0);
+  }
+
+  25% {
+    transform: rotate(-15deg) translateX(-3px);
+  }
+
+  50% {
+    transform: rotate(0deg) translateX(0);
+  }
+
+  75% {
+    transform: rotate(15deg) translateX(3px);
+  }
+}
+
+/* TypeScript - Book flip animation */
+.skill-card:hover .skill-icon--book-flip {
+  animation: bookFlip 0.8s ease-in-out infinite;
+}
+
+@keyframes bookFlip {
+
+  0%,
+  100% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(400px) rotateY(25deg) scale(1.1);
+  }
+}
+
+/* Node.js - Bounce animation */
+.skill-card:hover .skill-icon--bounce {
+  animation: bounceAnimation 0.5s ease-in-out infinite;
+}
+
+@keyframes bounceAnimation {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* TensorFlow - Pulse glow (brain thinking) */
+.skill-card:hover .skill-icon--pulse-glow {
+  animation: pulseGlow 0.8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+    filter: brightness(1.5) drop-shadow(0 0 10px rgba(255, 111, 0, 0.8));
+  }
+}
+
+/* MongoDB - Leaf sway (gentle breeze) */
+.skill-card:hover .skill-icon--leaf-sway {
+  animation: leafSway 1s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes leafSway {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-20deg);
+  }
+
+  75% {
+    transform: rotate(20deg);
+  }
+}
+
+/* Three.js - Paint splash (colorful shake) */
+.skill-card:hover .skill-icon--paint-splash {
+  animation: paintSplash 0.3s ease-in-out infinite;
+}
+
+@keyframes paintSplash {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  50% {
+    transform: rotate(10deg) scale(1.15);
+  }
+
+  75% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+}
+
+/* AWS - Cloud float (gentle floating up and down) */
+.skill-card:hover .skill-icon--cloud-float {
+  animation: cloudFloat 1.5s ease-in-out infinite;
+}
+
+@keyframes cloudFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+
+  25% {
+    transform: translateY(-8px) translateX(3px);
+  }
+
+  50% {
+    transform: translateY(-5px) translateX(-3px);
+  }
+
+  75% {
+    transform: translateY(-10px) translateX(2px);
+  }
 }
 
 /* ======================================
