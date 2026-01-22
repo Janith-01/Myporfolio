@@ -230,4 +230,98 @@ canvas {
 /* Root Element */
 #root {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
+  /* iOS Safari fix */
+}
+
+/* ======================================
+   Mobile Optimizations
+   ====================================== */
+
+/* Prevent zoom on input focus (iOS) */
+@media (max-width: 768px) {
+
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .app {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Prevent text selection on UI elements */
+.btn,
+.panel-close,
+.legend,
+.interaction-hint {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth touch scrolling */
+.scrollable {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile viewport height fix (accounts for mobile browser UI) */
+@media (max-width: 768px) {
+  html {
+    height: -webkit-fill-available;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
+  /* Adjust base font size for mobile */
+  html {
+    font-size: 15px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 375px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  #root {
+    min-height: 100vh;
+  }
 }
